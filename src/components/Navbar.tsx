@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
@@ -109,93 +108,67 @@ const Navbar = () => {
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">Innovo</span>
         </Link>
 
-        {/* Desktop Navigation with Dropdown Menu */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center text-white hover:text-primary transition-colors">
-              <span className="mr-1">Menu</span>
-              <ChevronDown size={16} />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-black/80 backdrop-blur-md border-gray-800">
-              {navItems.map((item) => (
-                <DropdownMenuItem key={item.name} className="focus:bg-gray-800">
-                  <Link
-                    to={item.path}
-                    className={cn(
-                      "w-full text-sm font-medium relative flex items-center py-1",
-                      location.pathname === item.path
-                        ? "text-primary"
-                        : "text-white/80 hover:text-white"
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+        {/* Dropdown Menu - Now the only navigation option */}
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex items-center text-white hover:text-primary transition-colors bg-black/50 px-3 py-2 rounded-md border border-white/10">
+            <span className="mr-1">Menu</span>
+            <ChevronDown size={16} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-black/90 backdrop-blur-md border border-white/10 shadow-lg rounded-md z-50">
+            {navItems.map((item) => (
+              <DropdownMenuItem key={item.name} className="focus:bg-gray-800">
+                <Link
+                  to={item.path}
+                  className={cn(
+                    "w-full text-sm font-medium relative flex items-center py-1.5 px-3",
+                    location.pathname === item.path
+                      ? "text-primary"
+                      : "text-white/80 hover:text-white"
+                  )}
+                  onClick={handleCreateRipple}
+                >
+                  {item.name}
+                  {location.pathname === item.path && (
+                    <motion.div
+                      className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"
+                      layoutId="navbar-indicator"
+                      transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                    />
+                  )}
+                  
+                  {/* Ripple effects */}
+                  {ripples.map((ripple) => (
+                    <motion.span
+                      key={ripple.id}
+                      className="absolute bg-white/20 rounded-full pointer-events-none"
+                      style={{
+                        left: ripple.x,
+                        top: ripple.y,
+                        width: 4,
+                        height: 4,
+                        marginLeft: -2,
+                        marginTop: -2,
+                      }}
+                      initial="initial"
+                      animate="animate"
+                      variants={rippleVariants}
+                      onAnimationComplete={() => {
+                        setRipples((prevRipples) =>
+                          prevRipples.filter((r) => r.id !== ripple.id)
+                        );
+                      }}
+                    />
+                  ))}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-          {navItems.map((item) => (
-            <motion.div 
-              key={item.name}
-              initial="rest"
-              whileHover="hover"
-              whileTap="pressed"
-              variants={buttonVariants}
-              className="relative overflow-hidden"
-            >
-              <Link
-                to={item.path}
-                className={cn(
-                  "text-sm font-medium relative link-underline transition-colors",
-                  location.pathname === item.path
-                    ? "text-primary"
-                    : "text-white/80 hover:text-white"
-                )}
-                aria-current={location.pathname === item.path ? "page" : undefined}
-                onClick={handleCreateRipple}
-              >
-                {item.name}
-                {location.pathname === item.path && (
-                  <motion.div
-                    className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full"
-                    layoutId="navbar-indicator"
-                    transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
-                  />
-                )}
-                
-                {/* Ripple effects */}
-                {ripples.map((ripple) => (
-                  <motion.span
-                    key={ripple.id}
-                    className="absolute bg-white/20 rounded-full pointer-events-none"
-                    style={{
-                      left: ripple.x,
-                      top: ripple.y,
-                      width: 4,
-                      height: 4,
-                      marginLeft: -2,
-                      marginTop: -2,
-                    }}
-                    initial="initial"
-                    animate="animate"
-                    variants={rippleVariants}
-                    onAnimationComplete={() => {
-                      setRipples((prevRipples) =>
-                        prevRipples.filter((r) => r.id !== ripple.id)
-                      );
-                    }}
-                  />
-                ))}
-              </Link>
-            </motion.div>
-          ))}
-        </nav>
-
-        {/* Mobile Menu Button */}
+        {/* Mobile Menu Button - Now hidden since we're using the dropdown for all devices */}
         <motion.button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden text-white p-1 rounded-full hover:bg-accent transition-colors"
+          className="md:hidden hidden text-white p-1 rounded-full hover:bg-accent transition-colors"
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           whileTap={{ scale: 0.9 }}
           whileHover={{ scale: 1.1 }}
@@ -204,7 +177,7 @@ const Navbar = () => {
         </motion.button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Now hidden since we're using the dropdown for all devices */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -212,7 +185,7 @@ const Navbar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden bg-black/90 backdrop-blur-md"
+            className="hidden md:hidden overflow-hidden bg-black/90 backdrop-blur-md"
           >
             <nav className="flex flex-col space-y-4 py-6 px-4">
               {navItems.map((item) => (
