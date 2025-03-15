@@ -23,12 +23,23 @@ const AppRoutes = () => {
   useEffect(() => {
     // Force dark mode
     document.documentElement.classList.add('dark');
+    
+    // Add custom scrollbar and other global styles
+    document.body.classList.add('custom-scrollbar');
+    
+    // Add a class to show subtle scanlines effect
+    document.body.classList.add('subtle-scanlines');
+    
+    return () => {
+      document.body.classList.remove('custom-scrollbar');
+      document.body.classList.remove('subtle-scanlines');
+    };
   }, []);
 
   return (
     <>
       <Navbar />
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
@@ -55,7 +66,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Sonner position="top-right" />
+        <Sonner position="top-right" theme="dark" />
         <BrowserRouter>
           <CustomCursor />
           <AppRoutes />
