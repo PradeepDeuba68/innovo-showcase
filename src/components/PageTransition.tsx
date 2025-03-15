@@ -39,9 +39,15 @@ const PageTransition = ({ children }: PageTransitionProps) => {
     // Add a smooth scrolling class to the html element
     document.documentElement.classList.add("smooth-scroll");
     
+    // Set background to pure black
+    document.body.style.backgroundColor = "#000000";
+    document.body.style.color = "#ffffff";
+    
     return () => {
       // We're not allowing light mode, so we don't remove the dark class
       document.documentElement.classList.remove("smooth-scroll");
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
     };
   }, []);
 
@@ -52,7 +58,7 @@ const PageTransition = ({ children }: PageTransitionProps) => {
       exit="out"
       variants={pageVariants}
       transition={pageTransition}
-      className="min-h-screen w-full cursor-none overflow-x-hidden"
+      className="min-h-screen w-full cursor-none overflow-x-hidden bg-black text-white"
     >
       {/* Gradient orbs for background effect */}
       <div className="fixed -top-64 -right-64 w-[40rem] h-[40rem] bg-purple-500/5 rounded-full blur-3xl pointer-events-none z-0"></div>

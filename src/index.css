@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
@@ -48,8 +47,8 @@
   }
 
   .dark {
-    --background: 222 47% 8%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
     --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
@@ -97,6 +96,8 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     transition: background-color 0.3s, color 0.3s;
     overflow-x: hidden;
+    background-color: #000000;
+    color: #ffffff;
   }
   
   .smooth-scroll {
@@ -144,10 +145,10 @@
   position: absolute;
   width: 100%;
   transform: scaleX(0);
-  height: 1px;
-  bottom: -2px;
+  height: 2px;
+  bottom: -3px;
   left: 0;
-  background-color: currentColor;
+  background-color: #ffffff;
   transform-origin: bottom right;
   transition: transform 0.3s ease-out;
 }
@@ -163,7 +164,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -189,10 +190,10 @@
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.03) 50%,
-    rgba(0, 0, 0, 0.03) 50%
+    rgba(255, 255, 255, 0.02) 50%,
+    rgba(0, 0, 0, 0.02) 50%
   );
-  background-size: 100% 4px;
+  background-size: 100% 2px;
   z-index: 9999;
   pointer-events: none;
   opacity: 0.3;
@@ -334,4 +335,24 @@
 
 .liquid-button:hover::after {
   transform: translate(-50%, -50%) rotate(35deg) translate(0, -40%);
+}
+
+/* Click animation */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(100);
+    opacity: 0;
+  }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(0);
+  animation: ripple 0.6s ease-out;
 }

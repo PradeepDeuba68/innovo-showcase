@@ -30,9 +30,15 @@ const AppRoutes = () => {
     // Add a class to show subtle scanlines effect
     document.body.classList.add('subtle-scanlines');
     
+    // Set the body background to pure black and text to white
+    document.body.style.backgroundColor = "#000000";
+    document.body.style.color = "#ffffff";
+    
     return () => {
       document.body.classList.remove('custom-scrollbar');
       document.body.classList.remove('subtle-scanlines');
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
     };
   }, []);
 
@@ -60,6 +66,8 @@ const App = () => {
   // Force dark mode on initial load
   useEffect(() => {
     document.documentElement.classList.add('dark');
+    document.body.style.backgroundColor = "#000000";
+    document.body.style.color = "#ffffff";
   }, []);
 
   return (
