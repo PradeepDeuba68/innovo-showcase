@@ -8,6 +8,95 @@ const Hero = () => {
     <section className="min-h-screen relative flex flex-col justify-center overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20 md:py-32 relative z-10">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10 lg:gap-20">
+          {/* Animated Circle Photo - New Addition */}
+          <motion.div
+            className="mx-auto lg:mx-0 relative"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.div 
+              className="w-48 h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-primary/50 relative z-10"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              whileTap={{ scale: 0.95, rotate: -5 }}
+              animate={{ 
+                boxShadow: ["0 0 10px rgba(155, 135, 245, 0.5)", "0 0 20px rgba(155, 135, 245, 0.8)", "0 0 10px rgba(155, 135, 245, 0.5)"],
+              }}
+              transition={{
+                boxShadow: {
+                  repeat: Infinity,
+                  duration: 2,
+                },
+              }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1618160702438-9b02ab6515c9" 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Inner animated circle elements */}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent mix-blend-overlay"
+                animate={{ 
+                  rotate: [0, 360],
+                }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 20,
+                  ease: "linear"
+                }}
+              ></motion.div>
+            </motion.div>
+            
+            {/* Orbiting circles */}
+            <motion.div 
+              className="absolute -inset-2 z-0"
+              animate={{ rotate: 360 }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 15, 
+                ease: "linear" 
+              }}
+            >
+              <motion.div 
+                className="absolute top-1/2 -left-2 w-4 h-4 bg-primary rounded-full"
+                animate={{ 
+                  scale: [1, 1.4, 1],
+                  opacity: [0.7, 1, 0.7]
+                }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 2
+                }}
+              ></motion.div>
+              <motion.div 
+                className="absolute bottom-5 left-1/2 w-6 h-6 bg-blue-400 rounded-full"
+                animate={{ 
+                  scale: [1, 1.3, 1],
+                  opacity: [0.6, 0.9, 0.6]
+                }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 3,
+                  delay: 0.5
+                }}
+              ></motion.div>
+              <motion.div 
+                className="absolute top-10 right-5 w-5 h-5 bg-indigo-500 rounded-full"
+                animate={{ 
+                  scale: [1, 1.5, 1],
+                  opacity: [0.5, 0.8, 0.5]
+                }}
+                transition={{ 
+                  repeat: Infinity, 
+                  duration: 2.5,
+                  delay: 1
+                }}
+              ></motion.div>
+            </motion.div>
+          </motion.div>
+
           <div className="lg:max-w-3xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
